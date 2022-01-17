@@ -10,4 +10,7 @@ public class DebtResponseDto {
     private Date dueDate;
     private BigDecimal debtAmount;
     private Long userId;
+    private String userFullName;
+    private boolean isCollect;
+    private String debtType;
 }
