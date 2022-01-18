@@ -2,7 +2,7 @@ package com.buraktuysuz.fourthhomework.enums;
 
 public enum EnumDebtType {
 
-    MAIN,
+    NORMAL,
     INTRESET;
 
     private final int value;

@@ -33,6 +33,10 @@ public interface DebtMapper {
         debtResponseDto.setUserId(debt.getUser().getId());
          debtResponseDto.setUserFullName(debt.getUser().getFirstName() +" "+ debt.getUser().getLastName());
          debtResponseDto.setDebtType(debt.getDebtType().name());
+         if(debt.getDebt()!=null){
+             debtResponseDto.setSuperDeptId(debt.getDebt().getId());
+         }
+         debtResponseDto.setDueDate(debt.getDueDate());
      }
 
 }

@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -23,20 +25,18 @@ public class Debt implements BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dueDate;
+    private LocalDate dueDate;
+
+    private LocalDate createDate;
 
     @Column(nullable = false)
-    private EnumDebtType debtType= EnumDebtType.MAIN;
-//    private char debtType = 0;
+    private EnumDebtType debtType;
 
     @Column(precision = 19, scale = 2)
     private BigDecimal debtAmount;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date collectDate;
-
-    private boolean isCollect;
+    @Column(precision = 19, scale = 2)
+    private BigDecimal remainingDebtAmount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", foreignKey = @ForeignKey(name = "fk_debt_user_id"), nullable = false)
@@ -46,4 +46,6 @@ public class Debt implements BaseEntity {
     @JoinColumn(name = "id_super_dept", foreignKey = @ForeignKey(name = "fk_debt_super_dept_id"))
     private Debt debt = null;
 
+    @Transient
+    private BigDecimal intresetAmount;
 }

@@ -3,11 +3,12 @@ package com.buraktuysuz.fourthhomework.dto;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Data
 public class DebtRequestDto {
-    private Date dueDate;
+    private LocalDate dueDate;
     private BigDecimal debtAmount;
     private Long userId;
 }
