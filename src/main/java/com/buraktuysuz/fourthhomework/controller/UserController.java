@@ -1,11 +1,13 @@
 package com.buraktuysuz.fourthhomework.controller;
 
 
+import com.buraktuysuz.fourthhomework.dto.CollectionResponseDto;
 import com.buraktuysuz.fourthhomework.dto.DebtResponseDto;
 import com.buraktuysuz.fourthhomework.dto.UserRequestDto;
 import com.buraktuysuz.fourthhomework.dto.UserResponseDto;
 import com.buraktuysuz.fourthhomework.entitiy.Debt;
 import com.buraktuysuz.fourthhomework.entitiy.User;
+import com.buraktuysuz.fourthhomework.service.CollectionService;
 import com.buraktuysuz.fourthhomework.service.DebtService;
 import com.buraktuysuz.fourthhomework.service.UserService;
 import com.buraktuysuz.fourthhomework.service.entityService.UserEntityService;
@@ -25,6 +27,7 @@ public class UserController {
 
     private UserService userService;
     private DebtService debtService;
+    private CollectionService collectionService;
 
     @PostMapping
     public ResponseEntity save(@RequestBody UserRequestDto userRequestDto){
@@ -49,9 +52,9 @@ public class UserController {
         return ResponseEntity.ok(debtResponseDtoList);
     }
 
-    @GetMapping("/{id}/debtstotal")
-    public ResponseEntity findUserDebtsAmountTotal(@PathVariable Long id){
-        BigDecimal total = debtService.findUserDebtsAmountTotal(id);
+    @GetMapping("/{id}/calculatedebtstotal")
+    public ResponseEntity findUserDebtsAmountTotalwWithInterest(@PathVariable Long id){
+        BigDecimal total = debtService.findUserDebtsAmountTotalwWithInterest(id);
         return ResponseEntity.ok(total);
     }
 
@@ -63,6 +66,29 @@ public class UserController {
     @GetMapping("/{id}/overduedebtstotal")
     public ResponseEntity findAllUserDebtsOverdueAmountTotal(@PathVariable Long id){
         BigDecimal total  = debtService.findAllUserDebtsOverdueAmountTotal(id);
+        return ResponseEntity.ok(total);
+    }
+
+    @GetMapping("/{id}/collections")
+    public ResponseEntity findUserCollection(@PathVariable Long id){
+        List<CollectionResponseDto> collectionResponseDtos = collectionService.findCollectionByUserId(id);
+        return ResponseEntity.ok(collectionResponseDtos);
+    }
+    @GetMapping("/{id}/interestcollections")
+    public ResponseEntity findUserInterestCollections(@PathVariable Long id){
+        List<CollectionResponseDto> collectionResponseDtos = collectionService.findCollectionInterestByUserId(id);
+        return ResponseEntity.ok(collectionResponseDtos);
+    }
+
+  @GetMapping("/{id}/interestcollectionstotal")
+    public ResponseEntity findUserInterestCollectionTotal(@PathVariable Long id){
+        BigDecimal total = collectionService.findCollectionInterestTotalByUserId(id);
+        return ResponseEntity.ok(total);
+    }
+
+    @GetMapping("/{id}/currentinteresttotal")
+    public ResponseEntity findUserCurrentInterestTotal(@PathVariable Long id){
+        BigDecimal total = debtService.findUserCurrentInterestTotal(id);
         return ResponseEntity.ok(total);
     }
 

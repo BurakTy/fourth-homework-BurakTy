@@ -15,11 +15,12 @@ import java.util.List;
 public interface CollectionMapper {
     CollectionMapper INSTANCE = Mappers.getMapper(CollectionMapper.class);
 
-    @Mapping(target = "collectionAmount", source = "debt.debtAmount")
     List<CollectionResponseDto> convertToCollectionResponseDtoList(List<Collection> collectionList);
 
     @AfterMapping()
     default void setNulls(@MappingTarget() final CollectionResponseDto collectionResponseDto,Collection collection){
         collectionResponseDto.setCollectionAmount(collection.getDebt().getDebtAmount());
+        collectionResponseDto.setDebtId(collection.getDebt().getId());
+        collectionResponseDto.setDebtType(collection.getDebt().getDebtType().name());
     }
 }

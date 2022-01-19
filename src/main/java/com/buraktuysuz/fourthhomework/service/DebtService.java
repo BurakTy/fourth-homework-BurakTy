@@ -76,8 +76,8 @@ public class DebtService {
         return responseDtoList;
     }
 
-    public BigDecimal findUserDebtsAmountTotal(Long id) {
-        return debtEntityService.findAllUserDebtsAmountTotal(id);
+    public BigDecimal findUserDebtsAmountTotalwWithInterest(Long id) {
+        return debtEntityService.findUserDebtsAmountTotalwWithInterest(id);
     }
 
     public BigDecimal findAllUserDebtsOverdueAmountTotal(Long id) {
@@ -85,4 +85,7 @@ public class DebtService {
     }
 
 
+    public BigDecimal findUserCurrentInterestTotal(Long id) {
+        return  debtEntityService.findUserCurrentInterestTotal(id);
+    }
 }

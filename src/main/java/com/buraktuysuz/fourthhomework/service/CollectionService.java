@@ -35,6 +35,9 @@ public class CollectionService {
     public List<CollectionResponseDto> payByDebtId(Long id) {
         List<Collection> collectionList=new ArrayList<>();
         Debt debt = debtEntityService.findById(id);
+        if(debt.getRemainingDebtAmount().doubleValue()==BigDecimal.valueOf(0.00).doubleValue()){
+            throw new BadRequestException("No debt to be paid for this id " +id);
+        }
         debt.setRemainingDebtAmount(BigDecimal.ZERO);
         Collection collection=new Collection();
         collection.setDebt(debt);
@@ -69,10 +72,25 @@ public class CollectionService {
         return responseDtoList;
     }
 
+    public List<CollectionResponseDto> findCollectionByUserId(Long id) {
+        List<Collection> collectionList = collectionEntityService.findCollectionByUserId(id);
+        List<CollectionResponseDto> responseDtoList = CollectionMapper.INSTANCE.convertToCollectionResponseDtoList(collectionList);
+        return responseDtoList;
+    }
+
+    public BigDecimal findCollectionInterestTotalByUserId(Long id) {
+        return collectionEntityService.findCollectionInterestTotalByUserId(id);
+    }
+
     private long callOverdueDays(LocalDate date){
         LocalDate today = LocalDate.now();
         return  ChronoUnit.DAYS.between(date,today);
     }
 
+    public List<CollectionResponseDto> findCollectionInterestByUserId(Long id) {
+        List<Collection> collectionList = collectionEntityService.findCollectionInterestByUserId(id);
+        List<CollectionResponseDto> responseDtoList = CollectionMapper.INSTANCE.convertToCollectionResponseDtoList(collectionList);
+        return responseDtoList;
+    }
 
 }

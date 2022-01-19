@@ -9,4 +9,6 @@ import java.util.Date;
 public class CollectionResponseDto {
     private BigDecimal collectionAmount;
     private Date collectionDate;
+    private String debtType;
+    private Long debtId;
 }

@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +52,6 @@ public class DebtController {
         List<DebtResponseDto> usrUserDtoList = debtService.findAllBetweenDate(firstDate,lastDate);
         return ResponseEntity.ok(usrUserDtoList);
     }
-
 
 
 }
